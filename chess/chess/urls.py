@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from chessbackend.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/createuser',MyUserAPIList.as_view()),
+
 ]
