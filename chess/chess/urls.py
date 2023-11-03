@@ -20,6 +20,6 @@ from chessbackend.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/createuser',MyUserAPIList.as_view()),
+    path('api/v1/createuser/',MyUserAPIList.as_view()),
 
 ]
