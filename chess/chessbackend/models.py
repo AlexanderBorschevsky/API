@@ -1,5 +1,5 @@
 from datetime import date
-
+from django.contrib.auth.hashers import check_password
 from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.utils import timezone
@@ -20,3 +20,6 @@ class MyUser(models.Model):
         # Хешируем пароль перед сохранением
         self.password = make_password(self.password)
         super(MyUser, self).save(*args, **kwargs)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
