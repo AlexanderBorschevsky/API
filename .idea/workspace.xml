@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1eb72e2-7fb4-4135-9764-700cc9f19da2" name="Changes" comment="make fuck TOKENS">
+      <change afterPath="$PROJECT_DIR$/build_files.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vercel.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chess/chess/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/chess/chess/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chess/chess/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/chess/chess/wsgi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
