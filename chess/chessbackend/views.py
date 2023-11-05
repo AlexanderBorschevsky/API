@@ -1,8 +1,19 @@
+import jwt
 from django.shortcuts import render
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
 from .models import MyUser
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from .serializers import MyUserSerializer
+from datetime import datetime, timedelta
+
+from django.conf import settings
+from django.contrib.auth.models import (
+	AbstractBaseUser, BaseUserManager, PermissionsMixin
+)
+
 # Create your views here.
 class MyUserAPIList(generics.ListCreateAPIView):
     queryset = MyUser.objects.all()
@@ -41,4 +52,8 @@ class CheckUserView(APIView):
         if not user.check_password(password):
             return Response({'message': 'Неверный пароль'}, status=400)
 
-        return Response({'message': 'Пользователь прошел проверку'}, status=200)
+
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+
+        return Response({'message': 'Пользователь прошел проверку', 'access_token': access_token,'refresh':str(refresh)}, status=200)
