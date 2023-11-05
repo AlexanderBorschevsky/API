@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1io+rne-_38g_q$!)m*@^vo5w#mq%%^w+t%^=ydejh*mn0n=@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'chessbackend',
     'rest_framework',
     'rest_framework_simplejwt',
+
 ]
 
 MIDDLEWARE = [
@@ -70,8 +71,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'chess.wsgi.application'
-
+WSGI_APPLICATION = 'chess.wsgi.app'
+#WSGI_APPLICATION = 'vercel_app.wsgi.app'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
