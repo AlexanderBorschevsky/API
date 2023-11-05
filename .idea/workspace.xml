@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1eb72e2-7fb4-4135-9764-700cc9f19da2" name="Changes" comment="make fuck TOKENS">
+    <list default="true" id="d1eb72e2-7fb4-4135-9764-700cc9f19da2" name="Changes" comment="main///">
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chess/chess/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/chess/chess/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chess/chess/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/chess/chess/wsgi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,16 +36,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;alex&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/rest&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "alex",
+    "last_opened_file_path": "D:/rest",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -136,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699211012359</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="main///">
+      <option name="closed" value="true" />
+      <created>1699220417344</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1699220417344</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,6 +177,8 @@
     <MESSAGE value="create model" />
     <MESSAGE value="changes in alex" />
     <MESSAGE value="make fuck TOKENS" />
-    <option name="LAST_COMMIT_MESSAGE" value="make fuck TOKENS" />
+    <MESSAGE value="test on vercel" />
+    <MESSAGE value="main///" />
+    <option name="LAST_COMMIT_MESSAGE" value="main///" />
   </component>
 </project>
