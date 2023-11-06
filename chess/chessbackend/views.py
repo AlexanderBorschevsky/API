@@ -1,10 +1,15 @@
 import jwt
+from django.http import HttpResponse
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
 from .models import MyUser
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, status
 from rest_framework.views import APIView
 from .serializers import MyUserSerializer
 from datetime import datetime, timedelta
@@ -56,4 +61,11 @@ class CheckUserView(APIView):
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
 
-        return Response({'message': 'Пользователь прошел проверку', 'access_token': access_token,'refresh':str(refresh)}, status=200)
+        response = Response(
+            {'message': 'Пользователь прошел проверку', 'access_token': access_token, 'refresh': str(refresh)})
+        response.set_cookie('refresh_token', str(refresh), max_age=refresh.lifetime.total_seconds(),
+                            secure=True, httponly=True)
+
+        return response
+
+
