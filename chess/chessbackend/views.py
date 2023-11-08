@@ -9,8 +9,9 @@ from .serializers import MyUserSerializer
 
 # Create your views here.
 class MyUserAPIList(generics.ListCreateAPIView):
-    queryset = MyUser.objects.all()
+    queryset = MyUser.objects.none()
     serializer_class = MyUserSerializer
+
 
 
 
@@ -18,7 +19,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import MyUser
 
-class CheckUserView(APIView):
+class Login(APIView):
     def post(self, request):
         email = request.data.get('email')
         login = request.data.get('login')

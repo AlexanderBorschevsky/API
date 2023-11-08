@@ -1,8 +1,8 @@
 from datetime import date
 from django.contrib.auth.hashers import check_password
-from django.db import models
+
 from django.contrib.auth.hashers import make_password
-from django.utils import timezone
+
 
 # Create your models here.
 from django.db import models
@@ -10,11 +10,10 @@ from django.db import models
 
 class MyUser(models.Model):
     email = models.EmailField(max_length=70, unique=True)
-    login = models.CharField(max_length=20, unique=True, null=True)
+    login = models.CharField(max_length=20, unique=True, null=True,blank=True)
     password = models.CharField(max_length=255)
-    # custom_id = models.AutoField(primary_key=True)
     registration_date = models.DateField(default=date.today)
-    # achievments = models.
+    is_active=models.BooleanField(default=False)#чтобы сразу был неактивным
 
     def save(self, *args, **kwargs):
         # Хешируем пароль перед сохранением

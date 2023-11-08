@@ -8,5 +8,5 @@ class MyUserSerializer(serializers.ModelSerializer):
    # user=serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model=MyUser
-        fields= ('login','password','email')
+        fields= ('password','email','login')
 
