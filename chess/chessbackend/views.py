@@ -18,10 +18,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import MyUser
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import MyUser
-
 class CheckUserView(APIView):
     def post(self, request):
         email = request.data.get('email')
