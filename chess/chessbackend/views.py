@@ -1,4 +1,5 @@
-
+from django.utils.crypto import get_random_string
+from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
 from .service import EmailConfirmationService
 from .models import MyUser
@@ -19,20 +20,28 @@ class MyUserAPIList(generics.CreateAPIView):
 
         # Доступ к данным, которые прошли валидацию сериализатора
         user_data = serializer.validated_data
-
+        confirmation_token = get_random_string(length=32)
         # Создание пользователя с явным установлением атрибутов
-        user = MyUser(email=user_data['email'])
+        user = MyUser(email=user_data['email'], confirmation_token=confirmation_token)
+
 
         # Отправка сообщения об успешной регистрации на указанную почту
-        EmailConfirmationService.send_registration_success_email(user_data['email'])
+        EmailConfirmationService.send_registration_email(user_data['email'],confirmation_token)
 
         # Сохранение пользователя в базе данных
+
+
+        return Response({'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.','confirmation_token':confirmation_token},
+                        status=status.HTTP_201_CREATED,)
+class ConfirmRegistrationView(APIView):
+    def get(self, request, confirmation_token):
+
+        print(f"ConfirmRegistrationView called with token: {confirmation_token}")
+        user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
+        user.email_confirmed = True
         user.save()
-
-        return Response({'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.'},
-                        status=status.HTTP_201_CREATED)
-
-
+        print(f"User {user.email} confirmed successfully.")
+        return Response({'message': 'Регистрация подтверждена успешно.'}, status=status.HTTP_200_OK)
 
 
 class Login(APIView):
