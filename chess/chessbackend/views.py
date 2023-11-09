@@ -1,11 +1,11 @@
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from .service import EmailConfirmationService
-
 from .models import MyUser
-from rest_framework import generics, viewsets, status
-
+from rest_framework import generics, status
 from .serializers import MyUserSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 # Create your views here.
 class MyUserAPIList(generics.CreateAPIView):
@@ -33,9 +33,7 @@ class MyUserAPIList(generics.CreateAPIView):
                         status=status.HTTP_201_CREATED)
 
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import MyUser
+
 
 class Login(APIView):
     def post(self, request):
@@ -71,5 +69,3 @@ class Login(APIView):
 
         return response
 
-###
-###
