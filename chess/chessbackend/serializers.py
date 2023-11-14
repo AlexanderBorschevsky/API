@@ -5,8 +5,11 @@ from rest_framework.renderers import JSONRenderer
 from .models import MyUser
 
 class MyUserSerializer(serializers.ModelSerializer):
-   # user=serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # Добавляем поле password в сериализатор
+
+
     class Meta:
-        model=MyUser
-        fields= ('password','email','login')
+        model = MyUser
+        fields = ['email', 'password']
+
 

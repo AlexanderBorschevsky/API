@@ -24,3 +24,6 @@ class MyUser(models.Model):
 
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
+
+    def is_email_confirmed(self):
+        return self.email_confirmed

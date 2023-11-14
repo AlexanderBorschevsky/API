@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.utils.crypto import get_random_string
 from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -22,8 +23,8 @@ class MyUserAPIList(generics.CreateAPIView):
         user_data = serializer.validated_data
         confirmation_token = get_random_string(length=32)
         # Создание пользователя с явным установлением атрибутов
-        user = MyUser(email=user_data['email'], confirmation_token=confirmation_token)
-
+        user = MyUser(email=user_data['email'], confirmation_token=confirmation_token, email_confirmed=False)
+        user.save()
 
         # Отправка сообщения об успешной регистрации на указанную почту
         EmailConfirmationService.send_registration_email(user_data['email'],confirmation_token)
@@ -33,6 +34,7 @@ class MyUserAPIList(generics.CreateAPIView):
 
         return Response({'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.','confirmation_token':confirmation_token},
                         status=status.HTTP_201_CREATED,)
+
 class ConfirmRegistrationView(APIView):
     def get(self, request, confirmation_token):
 
@@ -48,7 +50,9 @@ class Login(APIView):
     def post(self, request):
         email = request.data.get('email')
         login = request.data.get('login')
-        password = request.data.get('password')
+        email_confirmed=request.data.get('email_confirmed')
+        password=request.data.get('password')
+
 
         if not (email or login):
             return Response({'message': 'Введите email или login'}, status=400)
@@ -63,7 +67,9 @@ class Login(APIView):
         if user is None:
             return Response({'message': 'Пользователь не найден'}, status=400)
 
-        # Проверьте пароль пользователя
+        if not user.is_email_confirmed():
+            return Response({'message': 'Подтвердите почту'}, status=400)
+
         if not user.check_password(password):
             return Response({'message': 'Неверный пароль'}, status=400)
 
