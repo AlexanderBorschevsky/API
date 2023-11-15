@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from chessbackend.views import *
 
 urlpatterns = [
@@ -23,4 +25,7 @@ urlpatterns = [
     path('api/v1/createuser/',MyUserAPIList.as_view()),
     path('api/check_user/', Login.as_view(), name='check_user'),
     path('api/confirm-registration/<str:confirmation_token>/', ConfirmRegistrationView.as_view(), name='confirm-registration'),
+    path('hello/', HelloWorldView.as_view(), name='hello_world'),
+
+   # path('logout/', Logout.as_view(), name='Logout'),
 ]
