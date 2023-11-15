@@ -17,13 +17,8 @@ class MyUser(models.Model):
     email_confirmed = models.BooleanField(default=False)
     confirmation_token = models.CharField(max_length=64, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        # Хешируем пароль перед сохранением
-        self.password = make_password(self.password)
-        super(MyUser, self).save(*args, **kwargs)
 
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
+
 
     def is_email_confirmed(self):
         return self.email_confirmed
