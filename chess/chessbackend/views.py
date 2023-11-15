@@ -1,4 +1,4 @@
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from django.utils.crypto import get_random_string
 from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -15,17 +15,20 @@ class MyUserAPIList(generics.CreateAPIView):
     serializer_class = MyUserSerializer
 
     def create(self, request, *args, **kwargs):
+        password = request.data.get('password')
         # Сериализация данных запроса
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
-        # Доступ к данным, которые прошли валидацию сериализатора
         user_data = serializer.validated_data
         confirmation_token = get_random_string(length=32)
-        # Создание пользователя с явным установлением атрибутов
         user = MyUser(email=user_data['email'], confirmation_token=confirmation_token, email_confirmed=False)
-        user.save()
 
+        # Доступ к данным, которые прошли валидацию сериализатора
+        user.password = make_password(password)
+
+        # Создание пользователя с явным установлением атрибутов
+
+        user.save()
         # Отправка сообщения об успешной регистрации на указанную почту
         EmailConfirmationService.send_registration_email(user_data['email'],confirmation_token)
 
@@ -70,7 +73,7 @@ class Login(APIView):
         if not user.is_email_confirmed():
             return Response({'message': 'Подтвердите почту'}, status=400)
 
-        if not user.check_password(password):
+        if not check_password(password,user.password):
             return Response({'message': 'Неверный пароль'}, status=400)
 
 
