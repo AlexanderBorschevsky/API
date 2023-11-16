@@ -64,7 +64,6 @@ class Login(APIView):
 
         if not check_password(password,user.password):
             return Response({'message': 'Неверный пароль'}, status=400)
-
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
 
