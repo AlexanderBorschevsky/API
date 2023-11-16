@@ -163,3 +163,4 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'aborschevscky@yandex.ru'
 EMAIL_HOST_PASSWORD = 'jofrhuztfdkxgqnz'
 BASE_URL = 'http://127.0.0.1:8000/'
+AUTH_USER_MODEL = 'chessbackend.MyUser'

@@ -17,28 +17,26 @@ from rest_framework.response import Response
 class MyUserAPIList(APIView):
 
     def post(self, request, *args, **kwargs):
-        password = request.data.get('password')
+
         serializer = MyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user_data = serializer.validated_data
-        confirmation_token = get_random_string(length=32)
-        user = MyUser(email=user_data['email'], confirmation_token=confirmation_token, email_confirmed=False)
-        user.password = make_password(password)
-        user.save()
+        #user_data = serializer.validated_data
+        serializer.save()
 
-        EmailConfirmationService.send_registration_email(user_data['email'],confirmation_token)
-        return Response({'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.','confirmation_token':confirmation_token},
+
+        #EmailConfirmationService.send_registration_email(user_data['email'],confirmation_token)
+        return Response({'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.'},
                         status=status.HTTP_201_CREATED,)
 
-class ConfirmRegistrationView(APIView):
-    def get(self, request, confirmation_token):
-
-        print(f"ConfirmRegistrationView called with token: {confirmation_token}")
-        user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
-        user.email_confirmed = True
-        user.save()
-        print(f"User {user.email} confirmed successfully.")
-        return Response({'message': 'Регистрация подтверждена успешно.'}, status=status.HTTP_200_OK)
+# class ConfirmRegistrationView(APIView):
+#     def get(self, request, confirmation_token):
+#
+#         print(f"ConfirmRegistrationView called with token: {confirmation_token}")
+#         user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
+#         user.email_confirmed = True
+#         user.save()
+#         print(f"User {user.email} confirmed successfully.")
+#         return Response({'message': 'Регистрация подтверждена успешно.'}, status=status.HTTP_200_OK)
 
 
 class Login(APIView):
@@ -47,12 +45,8 @@ class Login(APIView):
         login = request.data.get('login')
         password=request.data.get('password')
 
-        if not (email):
-            return Response({'message': 'Введите email '}, status=400)
 
-        user = None
-        if email:
-            user = MyUser.objects.filter(email=email).first()
+        user = MyUser.objects.filter(email=email).first()
 
 
         if user is None:
@@ -61,17 +55,20 @@ class Login(APIView):
         if not user.is_email_confirmed():
             return Response({'message': 'Подтвердите почту'}, status=400)
 
-        if not check_password(password,user.password):
+        if not user.check_password(password):
             return Response({'message': 'Неверный пароль'}, status=400)
-        refresh = RefreshToken.for_user(user)
-        access_token = (refresh.access_token)
+        refresh = (RefreshToken.for_user(user))
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
+        #print("Token payload:", access_token.payload)
+        print(type(refresh))
+        print(type(access_token))
 
-        print("Token payload:", access_token.payload)
 
 
         response = Response(
             {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh)})
-        response.set_cookie('refresh_token', str(refresh), max_age=refresh.lifetime.total_seconds(),
+        response.set_cookie('refresh_token', (refresh_token), max_age=refresh.lifetime.total_seconds(),
                             secure=True, httponly=True)
 
         return response
