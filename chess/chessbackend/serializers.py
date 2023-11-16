@@ -1,3 +1,4 @@
+from django.utils.crypto import get_random_string
 from rest_framework import serializers
 
 
@@ -16,3 +17,4 @@ class MyUserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
