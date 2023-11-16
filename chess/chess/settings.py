@@ -130,6 +130,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.AllowAny',
+    )
 
 }
 SIMPLE_JWT = {
@@ -144,6 +148,7 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
+
 }
 #STATICFILES_DIRS = [BASE_DIR/'static',]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build' , 'static' )

@@ -1,10 +1,11 @@
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponse
 from django.utils.crypto import get_random_string
+from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken,AccessToken
 from .service import EmailConfirmationService
 from .models import MyUser
 from rest_framework import generics, status, response
@@ -13,18 +14,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 # Create your views here.
-class MyUserAPIList(generics.CreateAPIView):
-    queryset = MyUser.objects.none()
-    serializer_class = MyUserSerializer
-    def create(self, request, *args, **kwargs):
+class MyUserAPIList(APIView):
+
+    def post(self, request, *args, **kwargs):
         password = request.data.get('password')
-        serializer = self.get_serializer(data=request.data)
+        serializer = MyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user_data = serializer.validated_data
         confirmation_token = get_random_string(length=32)
         user = MyUser(email=user_data['email'], confirmation_token=confirmation_token, email_confirmed=False)
         user.password = make_password(password)
         user.save()
+
         EmailConfirmationService.send_registration_email(user_data['email'],confirmation_token)
         return Response({'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.','confirmation_token':confirmation_token},
                         status=status.HTTP_201_CREATED,)
@@ -46,15 +47,13 @@ class Login(APIView):
         login = request.data.get('login')
         password=request.data.get('password')
 
-        if not (email or login):
-            return Response({'message': 'Введите email или login'}, status=400)
+        if not (email):
+            return Response({'message': 'Введите email '}, status=400)
 
-        # Проверьте наличие пользователя в базе данных
         user = None
         if email:
             user = MyUser.objects.filter(email=email).first()
-        elif login:
-            user = MyUser.objects.filter(login=login).first()
+
 
         if user is None:
             return Response({'message': 'Пользователь не найден'}, status=400)
@@ -65,7 +64,10 @@ class Login(APIView):
         if not check_password(password,user.password):
             return Response({'message': 'Неверный пароль'}, status=400)
         refresh = RefreshToken.for_user(user)
-        access_token = str(refresh.access_token)
+        access_token = (refresh.access_token)
+
+        print("Token payload:", access_token.payload)
+
 
         response = Response(
             {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh)})
@@ -75,7 +77,7 @@ class Login(APIView):
         return response
 
 class HelloWorldView(APIView):
-    authentication_classes = [JWTAuthentication]  # Замените на используемый вами класс аутентификации
+    #authentication_classes = [JWTAuthentication]  # Замените на используемый вами класс аутентификации
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
