@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+
 from datetime import timedelta
 from pathlib import Path
 
@@ -81,11 +82,11 @@ WSGI_APPLICATION = 'chess.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
+        'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'qwerty',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'PASSWORD': '1db1gD*EdfbG-bdG2*1EcD2FEBc-eE4-',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '11721',
     }
 }
 
@@ -153,7 +154,7 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 
 }
-#STATICFILES_DIRS = [BASE_DIR/'static',]
+STATICFILES_DIRS = os.path.join(BASE_DIR/'static',)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build' , 'static' )
 MEDIA_URLS = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
