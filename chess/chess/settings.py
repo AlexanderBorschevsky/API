@@ -187,3 +187,10 @@ CORS_ALLOW_HEADERS = [
 'x-csrftoken',
 'x-requested-with',
 ]
+CORS_ORIGIN_WHITELIST = [
+    'http://google.com',
+    'http://hostname.example.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:9000'
+    'https://chess-app-five.vercel.app',
+]
