@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'chessbackend',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 
 ]
 
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'chess.urls'
@@ -168,3 +170,7 @@ EMAIL_HOST_USER = 'enjoychess@yandex.ru'
 EMAIL_HOST_PASSWORD = 'otgxbivwrcqoefey'
 BASE_URL = 'https://api-beta-lyart.vercel.app/'
 AUTH_USER_MODEL = 'chessbackend.MyUser'
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://chess-app-five.vercel.app',
+]
