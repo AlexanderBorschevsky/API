@@ -176,17 +176,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://chess-app-five.vercel.app',
 ]
-CORS_ALLOW_HEADERS = [
-'accept',
-'accept-encoding',
-'authorization',
-'content-type',
-'dnt',
-'origin',
-'user-agent',
-'x-csrftoken',
-'x-requested-with',
-]
+
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
     'http://127.0.0.1:9000'
