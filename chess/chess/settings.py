@@ -166,5 +166,5 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'enjoychess@yandex.ru'
 EMAIL_HOST_PASSWORD = 'otgxbivwrcqoefey'
-BASE_URL = 'http://127.0.0.1:8000'
+BASE_URL = 'https://api-beta-lyart.vercel.app/'
 AUTH_USER_MODEL = 'chessbackend.MyUser'
