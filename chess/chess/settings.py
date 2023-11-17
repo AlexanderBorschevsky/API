@@ -171,6 +171,7 @@ EMAIL_HOST_PASSWORD = 'otgxbivwrcqoefey'
 BASE_URL = 'https://api-jmjs.vercel.app//'
 AUTH_USER_MODEL = 'chessbackend.MyUser'
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://chess-app-five.vercel.app',
