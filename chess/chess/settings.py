@@ -194,3 +194,11 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:9000'
     'https://chess-app-five.vercel.app',
 ]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
