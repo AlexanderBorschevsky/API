@@ -182,3 +182,5 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:9000'
     'https://chess-app-five.vercel.app',
 ]
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
