@@ -16,16 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from chessbackend.views import *
 
 urlpatterns = [
     path('admin', admin.site.urls),
-    path('api/v1/createuser',MyUserAPIList.as_view()),
-    path('api/check_user', Login.as_view(), name='check_user'),
+    path('api/v1/register',MyUserAPIList.as_view()),
+    path('api/v1/login', Login.as_view(), name='check_user'),
     path('api/confirm-registration/<str:confirmation_token>', ConfirmRegistrationView.as_view(), name='confirm-registration'),
     path('hello', HelloWorldView.as_view(), name='hello_world'),
+    path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/logout', Logout.as_view()),
 
    # path('logout/', Logout.as_view(), name='Logout'),
 ]

@@ -17,7 +17,7 @@ class MyUserSerializer(serializers.ModelSerializer):
         if not re.search(r'\d', password) or \
                 not re.search(r'[a-z]', password) or \
                 not re.search(r'[A-Z]', password) or \
-                not re.search(r'[!@#$%^&*(),.?":{}|<>]', password) or\
+                not re.search(r'[@.#$!%*_?&^]', password) or\
                 len(password)<8:
                     raise serializers.ValidationError(
                         "Пароль должен быть не менее 8 символов, содержать хотя бы одну цифру, одну строчную и прописную буквы, а также один из следующих символов: !@#$%^&*(),.?\":{}|<>"

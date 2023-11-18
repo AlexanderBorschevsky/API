@@ -1,4 +1,6 @@
 import secrets
+
+from django.shortcuts import redirect
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -80,3 +82,8 @@ class HelloWorldView(APIView):
         user = request.user
         print(user)
         return Response({'message': 'Hello, World!'})
+class Logout(APIView):
+    def get(self,request):
+        response = redirect('api/check_user')  # Замените 'your_redirect_url' на URL, на который вы хотите перенаправить пользователя после выхода
+        response.delete_cookie('refresh_token')
+        return response
