@@ -84,6 +84,6 @@ class HelloWorldView(APIView):
         return Response({'message': 'Hello, World!'})
 class Logout(APIView):
     def get(self,request):
-        response = redirect('api/check_user')  # Замените 'your_redirect_url' на URL, на который вы хотите перенаправить пользователя после выхода
+        response = redirect('api/v1/login')  # Замените 'your_redirect_url' на URL, на который вы хотите перенаправить пользователя после выхода
         response.delete_cookie('refresh_token')
         return response

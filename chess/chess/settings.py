@@ -155,6 +155,7 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
+    'REFRESH_TOKEN_COOKIE': 'refresh_token',
 
 }
 STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
