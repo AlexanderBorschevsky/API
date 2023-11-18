@@ -1,6 +1,7 @@
 import secrets
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from .service import EmailConfirmationService
@@ -72,7 +73,7 @@ class Login(APIView):
 
 
 class HelloWorldView(APIView):
-    # authentication_classes = [JWTAuthentication]  # Замените на используемый вами класс аутентификации
+    authentication_classes = [JWTAuthentication]  # Замените на используемый вами класс аутентификации
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
