@@ -67,7 +67,7 @@ class Login(APIView):
         response = Response(
             {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh)})
         response.set_cookie('refresh_token', (refresh_token), max_age=refresh.lifetime.total_seconds(),
-                             httponly=True,samesite='None',secure=False)
+                             httponly=True,samesite=None,secure=False)
 
         return response
 
