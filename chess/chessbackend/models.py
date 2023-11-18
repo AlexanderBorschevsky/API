@@ -10,7 +10,13 @@ from django.utils.crypto import get_random_string
 
 
 class MyUser(AbstractUser):
-
+    is_active = None
+    last_name = None
+    last_login = None
+    is_staff = None
+    is_superuser = None
+    first_name = None
+    date_joined = None
     email = models.EmailField(max_length=70, unique=True)
     login = models.CharField(max_length=20, unique=True, null=True,blank=True)
     password = models.CharField(max_length=255)

@@ -87,9 +87,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': '1db1gD*EdfbG-bdG2*1EcD2FEBc-eE4-',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '11721',
+        'PASSWORD': 'a5fF2E4-aaE5EdbB3BaecacGeC-462C5',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '55713',
     }
 }
 
@@ -169,7 +169,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'enjoychess@yandex.ru'
 EMAIL_HOST_PASSWORD = 'otgxbivwrcqoefey'
-BASE_URL = 'https://api-jmjs.vercel.app//'
+BASE_URL = 'https://api-jmjs.vercel.app'
 AUTH_USER_MODEL = 'chessbackend.MyUser'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
