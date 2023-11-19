@@ -1,11 +1,15 @@
 import secrets
 
+from django.http import JsonResponse
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenRefreshView
+
 from .service import EmailConfirmationService
 from .models import MyUser
 from rest_framework import generics, status, response
@@ -68,7 +72,7 @@ class Login(APIView):
 
         response = Response(
             {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh)})
-        response.set_cookie('refresh', (refresh_token), max_age=refresh.lifetime.total_seconds(),
+        response.set_cookie('refresh_token', (refresh_token), max_age=refresh.lifetime.total_seconds(),
                              httponly=True,samesite='None',secure=True)
 
         return response
@@ -86,4 +90,28 @@ class Logout(APIView):
     def get(self,request):
         response = redirect('api/v1/login')  # Замените 'your_redirect_url' на URL, на который вы хотите перенаправить пользователя после выхода
         response.delete_cookie('refresh_token')
+
         return response
+
+
+@csrf_exempt
+def refresh_access_token(request):
+    if request.method == 'POST':
+        # Получаем refresh токен из куки
+        refresh_token_value = request.COOKIES.get('refresh_token')
+        print(refresh_token_value)
+
+        if refresh_token_value:
+            # Пытаемся создать новый access токен
+            try:
+                refresh_token = RefreshToken(refresh_token_value)
+                access_token = str(refresh_token.access_token)
+
+                # Устанавливаем новый access токен в куку
+                response = JsonResponse({'access_token': access_token})
+                #response.set_cookie('refresh_token', refresh_token, httponly=True,samesite='None',secure=True)
+                return response
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'detail': 'Invalid request method'}, status=400)
