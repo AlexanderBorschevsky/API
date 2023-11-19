@@ -103,17 +103,18 @@ def refresh_access_token(request):
 
         # Получаем refresh токен из куки
         refresh_token_value = request.COOKIES.get('refresh_token')
-        print(refresh_token_value)
 
         if refresh_token_value:
             # Пытаемся создать новый access токен
             try:
                 refresh_token = RefreshToken(refresh_token_value)
                 access_token = str(refresh_token.access_token)
-
+                user_id = refresh_token.payload.get('user_id')
+                user = MyUser.objects.get(id=user_id)
+                new_refresh_token = RefreshToken.for_user(user)
                 # Устанавливаем новый access токен в куку
                 response = JsonResponse({'access_token': access_token})
-                #response.set_cookie('refresh_token', refresh_token, httponly=True,samesite='None',secure=True)
+                response.set_cookie('refresh_token', new_refresh_token,max_age=new_refresh_token.lifetime.total_seconds() ,httponly=True,samesite='None',secure=True)
                 return response
             except Exception as e:
                 return JsonResponse({'error': str(e)}, status=400)
