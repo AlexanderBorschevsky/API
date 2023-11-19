@@ -1,6 +1,6 @@
 import secrets
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import get_object_or_404
@@ -87,11 +87,13 @@ class HelloWorldView(APIView):
         print(user)
         return Response({'message': 'Hello, World!'})
 class Logout(APIView):
-    def get(self,request):
-        response = Response('api/v1/login')  # Замените 'your_redirect_url' на URL, на который вы хотите перенаправить пользователя после выхода
-        response.delete_cookie('refresh_token')
-
-        return response
+    def post(self, request, *args, **kwargs):
+        if 'refresh_token' in request.COOKIES:
+            response = Response({'detail': 'Successfully logged out'})
+            response.delete_cookie('refresh_token')  # Укажите ваш домен и путь
+            return response
+        else:
+            return Response({'detail': 'No refresh token found'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @csrf_exempt
