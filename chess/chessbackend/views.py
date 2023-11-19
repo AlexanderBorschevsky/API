@@ -1,21 +1,16 @@
 import secrets
-
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenRefreshView
-
 from .service import EmailConfirmationService
-from .models import MyUser
-from rest_framework import generics, status, response
 from .serializers import MyUserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
+from django.http import JsonResponse
+from rest_framework_simplejwt.tokens import RefreshToken
+from .models import MyUser
 
 
 # Create your views here.
@@ -73,7 +68,7 @@ class Login(APIView):
         response = Response(
             {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh)})
         response.set_cookie('refresh_token', (refresh_token), max_age=refresh.lifetime.total_seconds(),
-                             httponly=True,samesite='None',secure=True)
+                            httponly=True, samesite='None', secure=True)
 
         return response
 
@@ -86,12 +81,14 @@ class HelloWorldView(APIView):
         user = request.user
         print(user)
         return Response({'message': 'Hello, World!'})
+
+
 class Logout(APIView):
     def post(self, request, *args, **kwargs):
         if 'refresh_token' in request.COOKIES:
             response = Response(
                 {'message': 'Пользователь прошел проверку'})
-            response.set_cookie('refresh_token', 'invalide',max_age=0,httponly=True,samesite='None',secure=True)
+            response.set_cookie('refresh_token', 'invalide', max_age=0, httponly=True, samesite='None', secure=True)
             return response
         else:
             return Response({'detail': 'No refresh token found'}, status=status.HTTP_400_BAD_REQUEST)
@@ -104,18 +101,52 @@ def refresh_access_token(request):
         refresh_token_value = request.COOKIES.get('refresh_token')
 
         if refresh_token_value:
-            # Пытаемся создать новый access токен
             try:
                 refresh_token = RefreshToken(refresh_token_value)
                 access_token = str(refresh_token.access_token)
                 user_id = refresh_token.payload.get('user_id')
                 user = MyUser.objects.get(id=user_id)
                 new_refresh_token = RefreshToken.for_user(user)
-                # Устанавливаем новый access токен в куку
                 response = JsonResponse({'access_token': access_token})
-                response.set_cookie('refresh_token', new_refresh_token,max_age=new_refresh_token.lifetime.total_seconds() ,httponly=True,samesite='None',secure=True)
+                response.set_cookie('refresh_token', new_refresh_token,
+                                    max_age=new_refresh_token.lifetime.total_seconds(), httponly=True, samesite='None',
+                                    secure=True)
                 return response
             except Exception as e:
                 return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'detail': 'Invalid request method'}, status=400)
+
+
+class AuthUser(APIView):
+    def post(self, request):
+        try:
+            refresh_token_value = request.COOKIES.get('refresh_token')
+
+            if refresh_token_value:
+                refresh_token = RefreshToken(refresh_token_value)
+                access_token = str(refresh_token.access_token)
+                user_id = refresh_token.payload.get('user_id')
+                user = MyUser.objects.get(id=user_id)
+                user_email = user.email
+
+                new_refresh_token = RefreshToken.for_user(user)
+                response_data = {
+                    'access_token': access_token,
+                    'email': user_email,
+                }
+                response = JsonResponse(response_data)
+                response.set_cookie(
+                    'refresh_token',
+                    str(new_refresh_token),
+                    max_age=new_refresh_token.lifetime.total_seconds(),
+                    httponly=True,
+                    samesite='None',
+                    secure=True,
+                )
+                return response
+
+        except MyUser.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
