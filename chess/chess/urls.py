@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/v1/logout', Logout.as_view()),
     path('refresh-access-token', refresh_access_token, name='refresh_access_token'),
     path('authuser', AuthUser.as_view()),
+    path('userlogin', UserLogin.as_view()),
 
    # path('logout/', Logout.as_view(), name='Logout'),
 ]

@@ -45,7 +45,6 @@ class ConfirmRegistrationView(APIView):
 class Login(APIView):
     def post(self, request):
         email = request.data.get('email')
-        login = request.data.get('login')
         password = request.data.get('password')
 
         user = MyUser.objects.filter(email=email).first()
@@ -71,6 +70,30 @@ class Login(APIView):
                             httponly=True, samesite='None', secure=True)
 
         return response
+
+class UserLogin(APIView):
+    def put(self,request):
+        new_login = request.data.get('login')
+        refresh_token = request.COOKIES.get('refresh_token')
+        refresh_token = RefreshToken(refresh_token)
+        refresh_token.payload.get('user_id')
+        user_id=refresh_token['user_id']
+
+        try:
+            user = MyUser.objects.get(id=user_id)
+
+            if new_login:
+                user.login = new_login
+                user.save()
+
+            # Другие операции, если нужны
+
+            return Response({'message': 'Логин успешно обновлен','login':user.login}, status=status.HTTP_200_OK)
+
+        except MyUser.DoesNotExist:
+            return Response({'error': 'Пользователь не найден'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class HelloWorldView(APIView):
