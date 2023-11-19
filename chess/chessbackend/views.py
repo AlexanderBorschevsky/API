@@ -91,7 +91,7 @@ class Logout(APIView):
         if 'refresh_token' in request.COOKIES:
             response = Response(
                 {'message': 'Пользователь прошел проверку'})
-            response.set_cookie('refresh_token', 'invalide',httponly=True,samesite='None',secure=True)
+            response.set_cookie('refresh_token', 'invalide',max_age=0,httponly=True,samesite='None',secure=True)
             return response
         else:
             return Response({'detail': 'No refresh token found'}, status=status.HTTP_400_BAD_REQUEST)
@@ -101,7 +101,6 @@ class Logout(APIView):
 def refresh_access_token(request):
     if request.method == 'POST':
 
-        # Получаем refresh токен из куки
         refresh_token_value = request.COOKIES.get('refresh_token')
 
         if refresh_token_value:
