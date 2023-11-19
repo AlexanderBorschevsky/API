@@ -105,11 +105,12 @@ def refresh_access_token(request):
             # Пытаемся создать новый access токен
             try:
                 refresh_token = RefreshToken(refresh_token_value)
+                refresh_token.refresh()
                 access_token = str(refresh_token.access_token)
 
                 # Устанавливаем новый access токен в куку
                 response = JsonResponse({'access_token': access_token})
-                response.set_cookie('refresh_token', refresh_token, httponly=True,samesite='None',secure=True)
+                #response.set_cookie('refresh_token', refresh_token, httponly=True,samesite='None',secure=True)
                 return response
             except Exception as e:
                 return JsonResponse({'error': str(e)}, status=400)
