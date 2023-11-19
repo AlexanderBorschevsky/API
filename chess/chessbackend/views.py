@@ -45,9 +45,12 @@ class ConfirmRegistrationView(APIView):
 class Login(APIView):
     def post(self, request):
         email = request.data.get('email')
+        login = request.data.get('login')
         password = request.data.get('password')
-
-        user = MyUser.objects.filter(email=email).first()
+        if email:
+            user = MyUser.objects.filter(email=email).first()
+        if login:
+            user = MyUser.objects.filter(login=login).first()
 
         if user is None:
             return Response({'message': 'Пользователь не найден'}, status=400)
