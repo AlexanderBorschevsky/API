@@ -49,7 +49,7 @@ class Login(APIView):
         password = request.data.get('password')
         if email:
             user = MyUser.objects.filter(email=email).first()
-        if login:
+        elif login:
             user = MyUser.objects.filter(login=login).first()
 
         if user is None:
