@@ -155,11 +155,13 @@ class AuthUser(APIView):
                 user_id = refresh_token.payload.get('user_id')
                 user = MyUser.objects.get(id=user_id)
                 user_email = user.email
+                user_login = user.login
 
                 new_refresh_token = RefreshToken.for_user(user)
                 response_data = {
                     'access_token': access_token,
                     'email': user_email,
+                    'login': user_login
                 }
                 response = JsonResponse(response_data)
                 response.set_cookie(
