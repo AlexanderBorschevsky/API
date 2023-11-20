@@ -68,19 +68,20 @@ class Login(APIView):
         print(type(access_token))
 
         response = Response(
-            {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh)})
+            {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh),'login':user.login})
         response.set_cookie('refresh_token', (refresh_token), max_age=refresh.lifetime.total_seconds(),
                             httponly=True, samesite='None', secure=True)
 
         return response
 
+
 class UserLogin(APIView):
-    def put(self,request):
+    def put(self, request):
         new_login = request.data.get('login')
         refresh_token = request.COOKIES.get('refresh_token')
         refresh_token = RefreshToken(refresh_token)
         refresh_token.payload.get('user_id')
-        user_id=refresh_token['user_id']
+        user_id = refresh_token['user_id']
 
         try:
             user = MyUser.objects.get(id=user_id)
@@ -91,7 +92,7 @@ class UserLogin(APIView):
 
             # Другие операции, если нужны
 
-            return Response({'message': 'Логин успешно обновлен','login':user.login}, status=status.HTTP_200_OK)
+            return Response({'message': 'Логин успешно обновлен', 'login': user.login}, status=status.HTTP_200_OK)
 
         except MyUser.DoesNotExist:
             return Response({'error': 'Пользователь не найден'}, status=status.HTTP_404_NOT_FOUND)
