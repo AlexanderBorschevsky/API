@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'chess.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'a5fF2E4-aaE5EdbB3BaecacGeC-462C5',
-        'HOST': 'viaduct.proxy.rlwy.net',
-        'PORT': '55713',
+        'NAME': 'verceldb',
+        'USER': 'default',
+        'PASSWORD': 'POJajT58wDYW5',
+        'HOST': 'ep-twilight-paper-42016679-pooler.us-east-1.postgres.vercel-storage.com',
+        'PORT': '5432',
     }
 }
 
