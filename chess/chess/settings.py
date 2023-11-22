@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'verceldb',
         'USER': 'default',
-        'PASSWORD': 'POJajT58wDYW5',
+        'PASSWORD': 'POJajT58wDYW',
         'HOST': 'ep-twilight-paper-42016679-pooler.us-east-1.postgres.vercel-storage.com',
         'PORT': '5432',
     }
