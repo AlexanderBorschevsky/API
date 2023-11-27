@@ -172,7 +172,7 @@ class AuthUser(APIView):
                     max_age=new_refresh_token.lifetime.total_seconds(),
                     httponly=True,
                     samesite='None',
-                    secure=True,
+                    secure=False,
                 )
                 return response
 
