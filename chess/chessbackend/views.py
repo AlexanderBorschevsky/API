@@ -8,10 +8,11 @@ from .serializers import MyUserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MyUser
-
+def index(request):
+   return HttpResponse('Сайт работает')
 
 # Create your views here.
 class MyUserAPIList(APIView):

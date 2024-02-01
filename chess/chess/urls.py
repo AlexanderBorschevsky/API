@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+
 from chessbackend.views import *
 
 urlpatterns = [
+    path('',index),
     path('admin', admin.site.urls),
     path('api/v1/register',MyUserAPIList.as_view()),
     path('api/v1/login', Login.as_view(), name='check_user'),
