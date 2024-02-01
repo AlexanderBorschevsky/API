@@ -80,8 +80,7 @@ class UserLogin(APIView):
         new_login = request.data.get('login')
         refresh_token = request.COOKIES.get('refresh_token')
         refresh_token = RefreshToken(refresh_token)
-        refresh_token.payload.get('user_id')
-        user_id = refresh_token['user_id']
+        user_id = refresh_token.payload.get('user_id')
 
         try:
             user = MyUser.objects.get(id=user_id)
@@ -171,7 +170,7 @@ class AuthUser(APIView):
                     max_age=new_refresh_token.lifetime.total_seconds(),
                     httponly=True,
                     samesite='None',
-                    secure=False,
+                    secure=True,
                 )
                 return response
 
