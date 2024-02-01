@@ -12,7 +12,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MyUser
 def index(request):
-   return HttpResponse('Сайт работает')
+   return HttpResponse('Сайт работает!')
 
 # Create your views here.
 class MyUserAPIList(APIView):
@@ -34,12 +34,12 @@ class MyUserAPIList(APIView):
 
 class ConfirmRegistrationView(APIView):
     def get(self, request, confirmation_token):
-        print(f"ConfirmRegistrationView called with token: {confirmation_token}")
+
         user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
 
         user.email_confirmed = True
         user.save()
-        print(f"User {user.email} confirmed successfully.")
+
         return Response({'message': 'Регистрация подтверждена успешно.'}, status=status.HTTP_200_OK)
 
 
@@ -64,9 +64,7 @@ class Login(APIView):
         refresh = (RefreshToken.for_user(user))
         access_token = str(refresh.access_token)
         refresh_token = str(refresh)
-        # print("Token payload:", access_token.payload)
-        print(type(refresh))
-        print(type(access_token))
+
 
         response = Response(
             {'message': 'Пользователь прошел проверку', 'access_token': str(access_token), 'refresh': str(refresh),
@@ -108,7 +106,7 @@ class HelloWorldView(APIView):
 
     def get(self, request):
         user = request.user
-        print(user)
+
         return Response({'message': 'Hello, World!'})
 
 
