@@ -50,13 +50,10 @@ class Login(APIView):
         email = request.data.get('email')
         login = request.data.get('login')
         password = request.data.get('password')
-        user = MyUser.objects.get(email=email)
         if email:
-            user = MyUser.objects.get(email=email)
+            user = get_object_or_404(MyUser,email=str(email).lower())
         elif login:
-            user = MyUser.objects.get(login=login)
-        if user is None:
-            return Response({'message': 'Пользователь не найден'}, status=400)
+            user = get_object_or_404(MyUser,login=login)
         if user.email_confirmed is False:
             return Response({'message': 'Подтвердите почту'}, status=400)
         if not user.check_password(password):
@@ -168,14 +165,9 @@ class ResetPassword(APIView):
 
     def post(self, request):
         user_email = request.data.get('email')
-        if not user_email:
-            return Response({'error': 'User_email not found'}, status=status.HTTP_400_BAD_REQUEST)
-        if user_email:
-            user = MyUser.objects.get(email=user_email)
-            user.confirmation_token = self.generate_confirmation_token()
-            user.save()
-        else:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        user = get_object_or_404(MyUser, email=user_email)
+        user.confirmation_token = self.generate_confirmation_token()
+        user.save()
         PasswordResetService.reset_password(user.email, user.confirmation_token)
         return Response({
             'message': 'Для сброса пароля, перейдите на указанную почту .',
