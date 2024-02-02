@@ -15,19 +15,19 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MyUser
 
 
-def index(request):
+def index():
     return HttpResponse('Сайт работает!')
 
 
 # Create your views here.
+
+
 class MyUserAPIList(APIView):
-    def generate_confirmation_token(self):
-        return secrets.token_urlsafe(16)
 
     def post(self, request, *args, **kwargs):
         serializer = MyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save(confirmation_token=self.generate_confirmation_token())
+        user = serializer.save(confirmation_token=secrets.token_urlsafe(16))
         EmailConfirmationService.send_registration_email(user.email, user.confirmation_token)
 
         return Response({
@@ -51,9 +51,9 @@ class Login(APIView):
         login = request.data.get('login')
         password = request.data.get('password')
         if email:
-            user = get_object_or_404(MyUser,email=str(email).lower())
+            user = get_object_or_404(MyUser, email=str(email).lower())
         elif login:
-            user = get_object_or_404(MyUser,login=login)
+            user = get_object_or_404(MyUser, login=login)
         if user.email_confirmed is False:
             return Response({'message': 'Подтвердите почту'}, status=400)
         if not user.check_password(password):
@@ -160,13 +160,12 @@ class AuthUser(APIView):
 
 
 class ResetPassword(APIView):
-    def generate_confirmation_token(self):
-        return secrets.token_urlsafe(16)
 
     def post(self, request):
         user_email = request.data.get('email')
         user = get_object_or_404(MyUser, email=user_email)
-        user.confirmation_token = self.generate_confirmation_token()
+        user.confirmation_token = secrets.token_urlsafe(16)
+
         user.save()
         PasswordResetService.reset_password(user.email, user.confirmation_token)
         return Response({
