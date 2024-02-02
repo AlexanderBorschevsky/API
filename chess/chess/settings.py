@@ -17,7 +17,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,10 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1io+rne-_38g_q$!)m*@^vo5w#mq%%^w+t%^=ydejh*mn0n=@g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -77,7 +75,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'chess.wsgi.app'
-#WSGI_APPLICATION = 'vercel_app.wsgi.app'
+# WSGI_APPLICATION = 'vercel_app.wsgi.app'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -85,11 +83,11 @@ WSGI_APPLICATION = 'chess.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'verceldb',
-        'USER': 'default',
-        'PASSWORD': 'POJajT58wDYW',
-        'HOST': 'ep-twilight-paper-42016679-pooler.us-east-1.postgres.vercel-storage.com',
-        'PORT': '5432',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'a5fF2E4-aaE5EdbB3BaecacGeC-462C5',
+        'HOST': '35.214.179.121',
+        'PORT': '55713',
     }
 }
 
@@ -111,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -122,7 +119,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -145,7 +141,7 @@ REST_FRAMEWORK = {
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Время жизни токена
-    'REFRESH_TOKEN_LIFETIME':timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=30),  # Время жизни refresh-токена
     'SLIDING_TOKEN_LIFETIME': timedelta(days=14),  # Время жизни sliding-токена
     'SLIDING_TOKEN_REFRESH_LIFETIME_SLACK': timedelta(days=1),
@@ -156,12 +152,11 @@ SIMPLE_JWT = {
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
 
-
 }
-STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build' , 'static', )
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static', )
 MEDIA_URLS = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -170,7 +165,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'enjoychess@yandex.ru'
 EMAIL_HOST_PASSWORD = 'aqlvcvggysnomzjj'
-BASE_URL = 'https://api-jmjs.vercel.app'
+
 AUTH_USER_MODEL = 'chessbackend.MyUser'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
@@ -178,10 +173,3 @@ CORS_ALLOWED_ORIGINS = [
     'https://chess-app-five.vercel.app',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8000',
-    'http://127.0.0.1:9000'
-    'https://chess-app-five.vercel.app',
-]
-CSRF_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SAMESITE = 'None'

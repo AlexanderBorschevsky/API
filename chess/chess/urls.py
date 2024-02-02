@@ -21,15 +21,19 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from chessbackend.views import *
 
 urlpatterns = [
+    path('', index),
     path('admin', admin.site.urls),
-    path('api/v1/register',MyUserAPIList.as_view()),
+    path('api/v1/register', MyUserAPIList.as_view()),
     path('api/v1/login', Login.as_view(), name='check_user'),
-    path('api/confirm-registration/<str:confirmation_token>', ConfirmRegistrationView.as_view(), name='confirm-registration'),
+    path('api/confirm-registration/<str:confirmation_token>', ConfirmRegistrationView.as_view(),
+         name='confirm-registration'),
     path('hello', HelloWorldView.as_view(), name='hello_world'),
     path('api/v1/logout', Logout.as_view()),
     path('refresh-access-token', refresh_access_token, name='refresh_access_token'),
     path('authuser', AuthUser.as_view()),
     path('userlogin', UserLogin.as_view()),
+    path('api/v1/password-reset', ResetPassword.as_view()),
+    path('api/v1/password-reset/<str:confirmation_token>', ResetConfirmPassword.as_view(),name='password-reset')
 
-   # path('logout/', Logout.as_view(), name='Logout'),
+    # path('logout/', Logout.as_view(), name='Logout'),
 ]
