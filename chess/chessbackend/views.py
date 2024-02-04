@@ -16,7 +16,7 @@ from .models import MyUser
 
 
 def index():
-    return HttpResponse('Сайт работает!')
+    return HttpResponse('Сайт работает, но ему тяжело!')
 
 
 # Create your views here.
