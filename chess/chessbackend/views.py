@@ -42,7 +42,7 @@ class ConfirmRegistrationView(APIView):
         user.email_confirmed = True
         user.confirmation_token = None
         user.save()
-        return Response({'message': 'Регистрация подтверждена успешно.'}, status=status.HTTP_200_OK)
+        return redirect('https://shiefrchess.ru')
 
 
 class Login(APIView):
