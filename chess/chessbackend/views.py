@@ -1,6 +1,7 @@
 import re
 import secrets
 from django.contrib.auth.hashers import make_password
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
