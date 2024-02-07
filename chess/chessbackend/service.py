@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from rest_framework.reverse import reverse
 
-BASE_URL = 'https://chess-app-five.vercel.app'
+BASE_URL = 'https://shiferchess.ru'
 
 
 class EmailConfirmationService:
