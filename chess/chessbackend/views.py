@@ -43,7 +43,7 @@ class ConfirmRegistrationView(APIView):
         user.email_confirmed = True
         user.confirmation_token = None
         user.save()
-        return redirect('https://shiferchess.ru')
+        return redirect('https://chess-app-five.vercel.app/home')
 
 
 class Login(APIView):
