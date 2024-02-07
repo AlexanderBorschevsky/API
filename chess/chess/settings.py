@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'chess.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
+        'NAME': 'chess',
         'USER': 'postgres',
-        'PASSWORD': 'a5fF2E4-aaE5EdbB3BaecacGeC-462C5',
-        'HOST': '35.214.179.121',
-        'PORT': '55713',
+        'PASSWORD': 'Qwerty_123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

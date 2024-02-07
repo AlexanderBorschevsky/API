@@ -16,7 +16,7 @@ from .models import MyUser
 
 
 def index(request):
-    return HttpResponse('Сайт работает, но ему тяжело!')
+    return HttpResponse('попытка')
 
 
 # Create your views here.
@@ -37,7 +37,7 @@ class MyUserAPIList(APIView):
 
 
 class ConfirmRegistrationView(APIView):
-    def get(self, confirmation_token):
+    def get(self,request, confirmation_token):
         user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
         user.email_confirmed = True
         user.confirmation_token = None
