@@ -43,7 +43,7 @@ class ConfirmRegistrationView(APIView):
         user.email_confirmed = True
         user.confirmation_token = None
         user.save()
-        return redirect('https://shiefrchess.ru')
+        return redirect('https://shiferchess.ru')
 
 
 class Login(APIView):
