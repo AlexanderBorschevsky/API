@@ -191,4 +191,4 @@ class ResetConfirmPassword(APIView):
             user.password = make_password(password)
             user.confirmation_token = None
             user.save()
-            return Response({'message': 'Поздравляем, ваш пароль успешно обновлен.'}, status=status.HTTP_200_OK)
+            return redirect('https://chess-app-five.vercel.app/home')
