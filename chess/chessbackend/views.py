@@ -17,7 +17,7 @@ from .models import MyUser
 
 
 def index(request):
-    return HttpResponse('попытка')
+    return HttpResponse('ПОПЫТКА')
 
 
 # Create your views here.
