@@ -84,7 +84,7 @@ class UserLogin(APIView):
             if new_login:
                 user.login = new_login
                 user.save()
-            return Response({'message': 'Логин успешно обновлен', 'login': user.login}, status=status.HTTP_200_OK)
+            return JsonResponse({'message': 'Логин успешно обновлен', 'login': user.login}, status=status.HTTP_200_OK)
         except MyUser.DoesNotExist:
             return Response({'error': 'Пользователь не найден'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
@@ -174,7 +174,7 @@ class ResetPassword(APIView):
 
         user.save()
         PasswordResetService.reset_password(user.email, user.confirmation_token)
-        return Response({
+        return JsonResponse({
             'message': 'Для сброса пароля, перейдите на указанную почту .',
             'confirmation_token': user.confirmation_token
         }, status=status.HTTP_201_CREATED)
@@ -190,7 +190,7 @@ class ResetConfirmPassword(APIView):
                 not re.search(r'[A-Z]', password) or \
                 not re.search(r'[@.#$!%*_?&^]', password) or \
                 len(password) < 8:
-            return Response(
+            return JsonResponse(
                 "Пароль должен быть не менее 8 символов, содержать хотя бы одну цифру, одну строчную и прописную буквы, а также один из следующих символов: @.#$!%*_?&^"
             )
         else:
