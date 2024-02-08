@@ -47,6 +47,7 @@ class ConfirmRegistrationView(APIView):
 
 
 class Login(APIView):
+    @csrf_exempt
     def post(self, request):
         email = request.data.get('email')
         login = request.data.get('login')
@@ -70,6 +71,7 @@ class Login(APIView):
 
 
 class UserLogin(APIView):
+    @csrf_exempt
     def put(self, request):
         new_login = request.data.get('login')
         refresh_token_old = request.COOKIES.get('refresh_token')
@@ -95,8 +97,8 @@ class HelloWorldView(APIView):
         user = request.user
         return Response({'message': 'Hello, World!'})
 
-
 class Logout(APIView):
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         if 'refresh_token' in request.COOKIES:
             response = Response(
