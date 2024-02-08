@@ -31,7 +31,7 @@ class MyUserAPIList(APIView):
         user = serializer.save(confirmation_token=secrets.token_urlsafe(16))
         EmailConfirmationService.send_registration_email(user.email, user.confirmation_token)
 
-        return Response({
+        return JsonResponse({
             'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.',
             'confirmation_token': user.confirmation_token
         }, status=status.HTTP_201_CREATED)
@@ -181,8 +181,7 @@ class ResetPassword(APIView):
 
 
 class ResetConfirmPassword(APIView):
-    def post(self, request, ):
-        confirmation_token = request.data.get('confirmation_token')
+    def post(self, request,confirmation_token):
         password = request.data.get('password')
         user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
         if not re.search(r'\d', password) or \
@@ -197,4 +196,6 @@ class ResetConfirmPassword(APIView):
             user.password = make_password(password)
             user.confirmation_token = None
             user.save()
-            return redirect('https://chess-app-five.vercel.app/home')
+            return Response(
+                "bitch"
+            )
