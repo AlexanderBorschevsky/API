@@ -176,7 +176,8 @@ class ResetPassword(APIView):
 
 
 class ResetConfirmPassword(APIView):
-    def post(self, request, confirmation_token):
+    def post(self, request, ):
+        confirmation_token=request.data.get('confirmation_token')
         password = request.data.get('password')
         user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
         if not re.search(r'\d', password) or \
