@@ -38,7 +38,7 @@ class MyUserAPIList(APIView):
 
 
 class ConfirmRegistrationView(APIView):
-    def get(self,request, confirmation_token):
+    def get(self, request, confirmation_token):
         user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
         user.email_confirmed = True
         user.confirmation_token = None
@@ -52,10 +52,12 @@ class Login(APIView):
         email = request.data.get('email')
         login = request.data.get('login')
         password = request.data.get('password')
+        user = None
         if email:
             user = get_object_or_404(MyUser, email=str(email).lower())
         elif login:
             user = get_object_or_404(MyUser, login=login)
+
         if user.email_confirmed is False:
             return Response({'message': 'Подтвердите почту'}, status=400)
         if not user.check_password(password):
@@ -96,6 +98,7 @@ class HelloWorldView(APIView):
     def get(self, request):
         user = request.user
         return Response({'message': 'Hello, World!'})
+
 
 class Logout(APIView):
     @csrf_exempt
@@ -179,7 +182,7 @@ class ResetPassword(APIView):
 
 class ResetConfirmPassword(APIView):
     def post(self, request, ):
-        confirmation_token=request.data.get('confirmation_token')
+        confirmation_token = request.data.get('confirmation_token')
         password = request.data.get('password')
         user = get_object_or_404(MyUser, confirmation_token=confirmation_token)
         if not re.search(r'\d', password) or \
