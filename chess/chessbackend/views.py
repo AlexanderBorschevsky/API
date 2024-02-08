@@ -168,7 +168,7 @@ class AuthUser(APIView):
 class ResetPassword(APIView):
 
     def post(self, request):
-        user_email = request.data.get('email')
+        user_email = request.data['email']
         user = get_object_or_404(MyUser, email=user_email)
         user.confirmation_token = secrets.token_urlsafe(16)
 
