@@ -30,7 +30,7 @@ class MyUserAPIList(APIView):
         serializer = MyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save(confirmation_token=secrets.token_urlsafe(16))
-        send_registration_email_task(user.email, user.confirmation_token)
+        send_registration_email_task.delay(user.email, user.confirmation_token)
 
         return JsonResponse({
             'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.',
