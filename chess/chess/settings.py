@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'chess.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'chess',
+        'NAME': 'admin',
         'USER': 'postgres',
         'PASSWORD': 'Qwerty_123',
         'HOST': 'localhost',
@@ -173,3 +173,6 @@ CORS_ALLOWED_ORIGINS = [
     'https://chess-app-five.vercel.app',
 ]
 
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
