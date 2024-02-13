@@ -14,6 +14,7 @@ from rest_framework import status
 from django.http import JsonResponse, HttpResponse
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MyUser
+from .tasks import send_registration_email_task
 
 
 def index(request):
@@ -29,7 +30,7 @@ class MyUserAPIList(APIView):
         serializer = MyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save(confirmation_token=secrets.token_urlsafe(16))
-        EmailConfirmationService.send_registration_email(user.email, user.confirmation_token)
+        send_registration_email_task(user.email, user.confirmation_token)
 
         return JsonResponse({
             'message': 'Регистрация успешно выполнена. Письмо отправлено на указанную почту.',
