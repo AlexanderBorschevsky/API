@@ -18,7 +18,7 @@ from .tasks import send_registration_email_task
 
 
 def index(request):
-    return HttpResponse('ПОПЫТКА')
+    return HttpResponse('redis')
 
 
 # Create your views here.
